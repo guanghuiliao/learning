@@ -50,10 +50,96 @@
   
 4. 笔试题，要求能运行出结果
 题1：链表逆序
+#include <cstdio>
+#include <iostream>
+
+struct ListNode
+{
+   int data;
+   ListNode *next;
+};
+
+ListNode* addNode(ListNode *head, ListNode *node)
+{
+    node->next = head;
+    return node;  
+}
+
+void printList(ListNode *head)
+{
+   ListNode *node = head;
+   while (node != nullptr)
+   {
+        std::cout << node->data << std::endl;
+        node = node->next;
+   }
+}
+
+ListNode* reserverList(ListNode *head)
+{
+   if (head == nullptr || head->next == nullptr)
+   {
+       return head;
+   }
+
+   ListNode *new_head = reserverList(head->next);
+   head->next->next = head;
+   head->next = nullptr;
+   
+   return new_head;
+}
+
+int main()
+{
+   ListNode *head = nullptr;
+
+   for (int i = 0; i < 10; ++i)
+   {
+       ListNode *node = new ListNode();
+       node->data = i;
+       head = addNode(head, node);
+   }
+
+   printList(head);  
+   printf("===========\n");
+   head = reserverList(head);
+
+   printList(head);  
+
+   return 0;
+}
 
 题2：去掉字符串中空格，要求空间复杂度O(1)，时间复杂度O(N)
     case "a b c d e  "
+#include <stdio.h>
+#include <iostream>
 
+
+int main()
+{
+  char a[] = " abcde  ";
+
+  printf("a1:%s|\n", a);
+
+  int j = 0;
+  for (int i = 0; i < sizeof(a); ++i)
+  {
+     if (a[i] == ' ')
+     {
+        continue;
+     } 
+     
+     a[j] = a[i];
+     j++;
+  }
+  if (j < sizeof(a))
+  {
+    a[j] = '\0';
+  }
+  printf("a2:%s|\n", a);
+
+  return 0;
+}
 
 
 
